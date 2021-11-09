@@ -30,6 +30,14 @@ def w(player):
 # def r():
 #
 
+# Yuumi performs the back action, detaching from allies if necessary
+def back():
+    data = get_data()
+    attached_status = data['activePlayer']['abilities']['W']['id']
+    if attached_status == 'YuumiWEndWrapper':
+        pydirectinput.keyDown('w')
+    pydirectinput.keyDown('b')
+
 
 # Yuumi follows a target ally
 def follow(player):
