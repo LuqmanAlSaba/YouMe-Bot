@@ -87,8 +87,36 @@ if __name__ == '__main__':
     item_path = [('Spellthief\'s Edge', 400), ('Faerie Charm', 250), ('Amplifying Tome', 435),
                  ('Bandleglass Mirror', 265), ('Ruby Crystal', 400), ('Kindlegem', 400)]
 
-    time.sleep(3)
-    buy()
+    # Below is code for testing the functions while we don't have VR working
+    # We can add more functions to the if/else branch as we code them
+    print("+---------------------------+")
+    print("+       Select Option       +")
+    print("+       W - W Ability       +")
+    print("+       B - Recall          +")
+    print("+       O - See Options     +")
+    print("+       STOP - Stop Testing +")
+    print("+---------------------------+")
+    while True:
+        choice = input()
+        if choice == 'W':
+            print("Executing W in 5 seconds, please open LoL...")
+            time.sleep(5)
+            w('f4')
+        elif choice == 'B':
+            print("Executing B in 5 seconds, please open LoL...")
+            time.sleep(5)
+            back()
+        elif choice == 'O':
+            print("+---------------------------+")
+            print("+       Select Option       +")
+            print("+       W - W Ability       +")
+            print("+       B - Recall          +")
+            print("+       O - See Options     +")
+            print("+---------------------------+")
+        elif choice == 'STOP':
+            break
+        else:
+            print("Please select a valid option...")
 
     # follow('f3')
     # w('f4')
