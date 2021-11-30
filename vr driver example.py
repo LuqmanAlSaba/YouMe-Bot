@@ -7,6 +7,7 @@ import wave  # for audio playback (testing purposes)
 from datetime import datetime, timedelta
 import pyaudio
 from heapq import heappush, heappop
+from Yuumi import *
 
 
 class YouMeSpeechRecognizer:
@@ -24,11 +25,11 @@ class YouMeSpeechRecognizer:
         self.playback = playback
 
         self.r = sr.Recognizer()
-        self.r.phrase_threshold = 0.1  # minimum seconds of speaking audio before we consider the speaking audio a
+        self.r.phrase_threshold = 0.20  # minimum seconds of speaking audio before we consider the speaking audio a
         # phrase - values below this are ignored (for filtering out clicks and pops)
 
-        self.r.pause_threshold = 0.3  # seconds of non-speaking audio before a phrase is considered complete
-        self.r.non_speaking_duration = 0.3  # seconds of non-speaking audio to keep on both sides of the recording
+        self.r.pause_threshold = 0.20  # seconds of non-speaking audio before a phrase is considered complete
+        self.r.non_speaking_duration = 0.12  # seconds of non-speaking audio to keep on both sides of the recording
 
         self.mic = sr.Microphone()
 
@@ -90,6 +91,21 @@ class YouMeSpeechRecognizer:
         with self.out_lock:
             while len(self.pq) > 0 and self.pq[0][0] == self.last_popped + 1:
                 out_text = heappop(self.pq)[1]
+                print("Out_Text", out_text)
+
+                if out_text == "bye " or out_text == "buy ":
+                    buy()
+                elif out_text == "back ":
+                    back()
+                elif out_text == "q " or out_text == "Q ":
+                    q()
+                elif out_text == "w ":
+                    w('f4')
+                elif out_text == "speed ":
+                    e()
+                elif out_text == "follow ":
+                    follow('f3')
+
                 self.output_stream.write(out_text)
                 self.output_stream.flush()
                 self.last_popped += 1
@@ -122,3 +138,6 @@ if __name__ == '__main__':
     ym_sr = YouMeSpeechRecognizer(sys.stdout, playback=False)  # playback is just for testing
     t = threading.Thread(target=ym_sr)
     t.start()  # Run voice input on separate thread
+
+    level_abilities_thread = threading.Thread(target=level_up_abilities)
+    level_abilities_thread.start()  # Run ability leveling thread
