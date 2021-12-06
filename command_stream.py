@@ -27,25 +27,28 @@ class YouMeCommandStream:
 
     def flush(self):
         # greedily try building commands
-
+        print("flush")
 
     # way to specify valid commands
 
     # way to tie commands to function calls with arguments
 
-
-
-
-
 if __name__ == '__main__':
-    def back():
+    def back(args):
         print("back command call")
 
-    def buy(item_name):
-        print("buy command call with arg: " + item_name)
+    def buy(args):
+        print("buy command call with arg: " + args)
+
+    def follow(args):
+        print("follow command called with arg: " + args)
+
     command_dict_example = {
-        "back", [back],
-        "buy item one", [buy, "item one"],
-        "buy item two", [buy, "item two"]
+        "back": back,
+        "buy": buy,
+        "follow": follow
     }
-    ym_cs = YouMeCommandStream(command_dict_example)
+
+    command_dict_example["follow"]("arg1")
+
+    # ym_cs = YouMeCommandStream(command_dict_example)
